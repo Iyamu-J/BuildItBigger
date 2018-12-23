@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
@@ -92,9 +93,14 @@ public class MainActivityFragment extends Fragment implements JokeRetriever {
     }
 
     private void startJokeActivity() {
-        Intent intent = new Intent(getActivity(), JokeActivity.class);
-        intent.putExtra(JokeActivity.EXTRA_JOKE, mJoke);
-        startActivity(intent);
+        if (mJoke != null) {
+            assert getActivity() != null;
+            Intent intent = new Intent(getActivity(), JokeActivity.class);
+            intent.putExtra(JokeActivity.EXTRA_JOKE, mJoke);
+            startActivity(intent);
+        } else {
+            Toast.makeText(getContext(), getString(R.string.error_message), Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void loadInterstitialAd() {
