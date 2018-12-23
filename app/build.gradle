@@ -35,6 +35,20 @@ android {
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
     }
+
+    flavorDimensions "version"
+    productFlavors {
+        free {
+            dimension "version"
+            applicationIdSuffix ".free"
+            versionNameSuffix "-free"
+        }
+        paid {
+            dimension "version"
+            applicationIdSuffix ".paid"
+            versionNameSuffix "-paid"
+        }
+    }
 }
 
 dependencies {
