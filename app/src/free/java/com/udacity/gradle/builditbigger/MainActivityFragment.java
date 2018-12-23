@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -19,6 +20,8 @@ import com.udacity.gradle.jokedisplay.JokeActivity;
  */
 public class MainActivityFragment extends Fragment implements JokeRetriever {
 
+    private ProgressBar progressBar;
+    
     public MainActivityFragment() {
     }
 
@@ -29,6 +32,10 @@ public class MainActivityFragment extends Fragment implements JokeRetriever {
 
         AdView mAdView = root.findViewById(R.id.adView);
         Button jokeButton = root.findViewById(R.id.joke_btn);
+        
+        progressBar = root.findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.GONE);
+        
         // Create an ad request. Check logcat output for the hashed device ID to
         // get test ads on a physical device. e.g.
         // "Use AdRequest.Builder.addTestDevice("ABCDEF012345") to get test ads on this device."
@@ -47,6 +54,7 @@ public class MainActivityFragment extends Fragment implements JokeRetriever {
     }
 
     private void getJoke() {
+        progressBar.setVisibility(View.VISIBLE);
         EndpointsAsyncTask endpointsAsyncTask = new EndpointsAsyncTask(this);
         endpointsAsyncTask.execute();
 
@@ -58,6 +66,7 @@ public class MainActivityFragment extends Fragment implements JokeRetriever {
             Intent intent = new Intent(getActivity(), JokeActivity.class);
             intent.putExtra(JokeActivity.EXTRA_JOKE, jokeResult);
             startActivity(intent);
+            progressBar.setVisibility(View.GONE);
         }
     }
 }
